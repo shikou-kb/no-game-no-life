@@ -1,0 +1,5 @@
+export const CATEGORIES=['生活起居','学习','工作','运动','社交','娱乐','家务','通勤'];
+const rows=[['sleep','睡眠','生活起居','#8186a7'],['rest','休息','生活起居','#9ca78b'],['meal','用餐','生活起居','#cc997d'],['wash','洗漱','生活起居','#8baab1'],['study','学习','学习','#648a73'],['work','工作','工作','#b89b63'],['exercise','运动','运动','#85a278'],['social','社交','社交','#a18fa8'],['play','娱乐','娱乐','#b3997b'],['chores','家务','家务','#b09885'],['commute','通勤','通勤','#84a2b0']];
+export const investmentKind=category=>category==='学习'?'study':category==='运动'?'exercise':null;
+export function defaultActivities(){return rows.map(([id,name,category,color])=>({id,name,category,color,favorite:['study','work','meal','rest','sleep','exercise'].includes(id),mainline:false,mainSkillId:null,relatedSkillIds:[],investmentKind:investmentKind(category),archived:false}));}
+export function supplementDefaults(state){const next=structuredClone(state);for(const a of defaultActivities())if(!next.activities.some(x=>x.id===a.id||x.name===a.name))next.activities.push(a);return next;}

@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+*.apk
+*.keystore
+*.jks
+*.log
+.runtime/
+.openai/
+test-results/
