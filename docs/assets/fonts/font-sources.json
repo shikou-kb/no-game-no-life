@@ -1,0 +1,25 @@
+{
+  "license": "SIL Open Font License 1.1",
+  "fonts": [
+    {
+      "file": "noto-sans-sc-a3041811a78c.ttf",
+      "bytes": 17772300,
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "source": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+      "license": "noto-sans-sc-license.txt",
+      "family": "NGNL Text"
+    },
+    {
+      "file": "barlow-medium-cd759df8ef9e.woff2",
+      "bytes": 22008,
+      "sha256": "cd759df8ef9efc98fee14307b4eb5ba27f08b1f8f2f3ad2872432e25c89907a8",
+      "source": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3_-gs51os.woff2",
+      "project": "https://github.com/jpt/barlow",
+      "license": "barlow-license.txt",
+      "family": "NGNL Numbers",
+      "weight": 500
+    }
+  ],
+  "transform": "Original upstream bytes, no subsetting or outline changes",
+  "notoCommit": "a85815a42757630ce188fdad368c2dfc444d4773"
+}

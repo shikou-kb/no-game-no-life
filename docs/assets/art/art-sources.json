@@ -1,0 +1,13 @@
+{
+  "asset": "time-poster-951e42dbc69a.png",
+  "bytes": 1235686,
+  "sha256": "951e42dbc69a7967c8a8b6e2809d6c2cd3a72e929be5eeced518e7f171f46021",
+  "dimensions": {
+    "width": 1742,
+    "height": 903
+  },
+  "source": "Original artwork generated with OpenAI imagegen for this application.",
+  "provenance": "AI-generated graphic, informed by user-supplied visual references. Reference images are not distributed.",
+  "usage": "Bundled as the default record-page cover. Custom cover and page background are configured independently.",
+  "rights": "Generated application artwork; no third-party reference artwork or franchise assets are bundled. This metadata does not grant rights to reference works."
+}

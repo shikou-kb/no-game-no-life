@@ -1,0 +1,6 @@
+@font-face {font-family:"NGNL Text";src:url("../assets/fonts/noto-sans-sc-a3041811a78c.ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap;}
+@font-face {font-family:"NGNL Numbers";src:url("../assets/fonts/barlow-medium-cd759df8ef9e.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
+:root {--font-ui:"NGNL Text",sans-serif;--font-number:"NGNL Numbers","NGNL Text",sans-serif;}
+body,button,input,textarea,select {font-family:var(--font-ui);}
+.r-digits,[data-live],[data-live-small],time,.r-date,.r-trend-table {font-variant-numeric:tabular-nums lining-nums;}
+.r-digits,[data-live],[data-live-small] {font-family:var(--font-number);font-variant-numeric:tabular-nums lining-nums;}

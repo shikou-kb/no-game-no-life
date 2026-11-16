@@ -1,4 +1,6 @@
-import * as D from './domain-2cd6b06ecb42.mjs';
+import {taskSlices,subtractSlices} from './stage-model-e14b41d62339.mjs';
+import * as D from './domain-e14b41d62339.mjs';
+import {effectiveActivity,groupIdForCategory} from './activity-policy-e14b41d62339.mjs';
 const zero=()=>new D.Fraction();
 const points=(rows,id)=>D.contribution(rows)[id]??zero();
 const clip=(rows,start,end)=>end<=start?[]:rows.filter(r=>r.start<end&&r.end>start).map(r=>({...r,start:Math.max(start,r.start),end:Math.min(end,r.end)}));
@@ -15,21 +17,21 @@ export function skillAt(state,skillId,at){
  return {...totals,at,located,growthPoints:located?totals.growthPoints:null,offsetRemaining:located?totals.offsetRemaining:null,exactGrowth:located?totals.exactGrowth:null};
 }
 export function periodContext(state,plan,now=Date.now()){
- const start=D.dayStart(plan.startDate,state.timeZone),end=D.dayStart(D.addDays(plan.endDate,1),state.timeZone),until=Math.min(end,now),status=now<start?'upcoming':now>=end?'past':'current';
- const rows=clip(D.confirmedSessions(state),start,until),matched=rows.filter(r=>D.planMatches(plan,r)),other=rows.filter(r=>!D.planMatches(plan,r));
+ const phase=state.phases?.find(p=>p.id===plan.phaseId),start=D.dayStart(phase?.startDate??plan.startDate,state.timeZone),end=D.dayStart(D.addDays(phase?.endDate??plan.endDate,1),state.timeZone),until=Math.min(end,now),status=now<start?'upcoming':now>=end?'past':'current';
+ const rows=clip(D.confirmedSessions(state),start,until),matched=taskSlices(state,plan,rows),other=subtractSlices(rows,matched);
  return {start,end,until,status,rows,matched,other};
 }
 export function sourceRows(state,plan,skillId,now=Date.now()){
- const {rows}=periodContext(state,plan,now);
- return rows.map(row=>{
+ const {matched,other}=periodContext(state,plan,now);
+ return [...matched.map(r=>({...r,matched:true})),...other.map(r=>({...r,matched:false}))].map(row=>{
   const value=points([row],skillId),primary=row.mainSkillId===skillId,activityMatch=plan.activityIds.includes(row.activityId),skillMatch=plan.skillIds.includes(row.mainSkillId);
-  return {...row,points:value.toNumber(),exactPoints:value,primary,matched:activityMatch||skillMatch,matchReason:activityMatch&&skillMatch?'所选活动与记录主项':activityMatch?'所选活动':skillMatch?'记录主项':'同期其他',running:row.id===state.running?.id};
+  return {...row,points:value.toNumber(),exactPoints:value,primary,matched:row.matched,matchReason:activityMatch&&skillMatch?'所选活动与记录主项':activityMatch?'所选活动':skillMatch?'记录主项':plan.groupIds?.includes(row.groupId??groupIdForCategory(row.category))?'所选整个类别':'同期其他',running:row.id===state.running?.id};
  }).filter(r=>r.points>0).sort((a,b)=>a.start-b.start||a.id.localeCompare(b.id));
 }
 export function stageOverview(state,plan,now=Date.now()){
  const context=periodContext(state,plan,now),{start,until,status,rows,matched,other}=context;
  const ids=new Set(plan.skillIds);
- for(const id of plan.activityIds){const activity=state.activities.find(a=>a.id===id);if(activity?.mainSkillId)ids.add(activity.mainSkillId);}
+ for(const a of state.activities.filter(a=>plan.activityIds.includes(a.id)||plan.groupIds?.includes(a.groupId))){const activity=effectiveActivity(state,a);if(activity.mainSkillId)ids.add(activity.mainSkillId);}
  for(const row of matched)for(const id of [row.mainSkillId,...(row.relatedSkillIds??[])])if(id)ids.add(id);
  const totals=D.contribution(rows),inside=D.contribution(matched),outside=D.contribution(other);
  const skills=state.skills.filter(skill=>ids.has(skill.id)).map(skill=>{
