@@ -1,4 +1,4 @@
-import {uid} from './domain-e14b41d62339.mjs';
+import {uid} from './domain-27ca4e179461.mjs';
 // A live peer answers directly. A timestamp or stored heartbeat alone is not continuity evidence.
 export function runtimeSession(nativeId=''){
  let id=nativeId||uid(),runningId=null,channel=null;const waiting=new Map();

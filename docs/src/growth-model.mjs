@@ -1,6 +1,6 @@
-import {taskSlices,subtractSlices} from './stage-model-e14b41d62339.mjs';
-import * as D from './domain-e14b41d62339.mjs';
-import {effectiveActivity,groupIdForCategory} from './activity-policy-e14b41d62339.mjs';
+import {taskSlices,subtractSlices} from './stage-model-27ca4e179461.mjs';
+import * as D from './domain-27ca4e179461.mjs';
+import {effectiveActivity,groupIdForCategory} from './activity-policy-27ca4e179461.mjs';
 const zero=()=>new D.Fraction();
 const points=(rows,id)=>D.contribution(rows)[id]??zero();
 const clip=(rows,start,end)=>end<=start?[]:rows.filter(r=>r.start<end&&r.end>start).map(r=>({...r,start:Math.max(start,r.start),end:Math.min(end,r.end)}));

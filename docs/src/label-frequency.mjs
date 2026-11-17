@@ -1,4 +1,4 @@
-import {isSelectable,orderedGroups,orderedLabels} from './catalog-order-e14b41d62339.mjs';
+import {isSelectable,orderedGroups,orderedLabels} from './catalog-order-27ca4e179461.mjs';
 
 export function labelStartCounts(state){
  if(state.rebuild?.labelStarts)return {...state.rebuild.labelStarts};

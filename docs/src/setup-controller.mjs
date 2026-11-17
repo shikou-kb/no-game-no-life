@@ -1,4 +1,4 @@
-import {adoptDefaults,effectiveActivity} from './activity-policy-e14b41d62339.mjs';
+import {adoptDefaults,effectiveActivity} from './activity-policy-27ca4e179461.mjs';
 export function createSetup({getState,tasks,e,catalog,editSkill,editPlan}){
  async function open(){const s=getState(),step=Math.min(s.setupProgress.step,2),titles=['确认活动与类别','培养与关联','这一阶段，可稍后再定'];
   await tasks.open({id:'setup:step'+step,kind:'setup',title:(step+1)+' / 3 · '+titles[step],initial:{},submit:step===2?'完成初始设置':'确认并继续',

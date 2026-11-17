@@ -112,7 +112,7 @@ dialog.task-edit .dialog-header{padding:21px 24px 16px}dialog.task-edit .dialog-
 .guide-time-example{margin:18px 0;padding:14px 0;border-block:1px solid var(--line)}.guide-time-example figcaption{font-size:13px;color:var(--muted)}
 .guide-time-chart{display:flex;align-items:center;gap:16px;margin:10px 0}.guide-time-chart svg{width:76px;height:76px;flex:none}.guide-time-chart p{font-size:13px;margin:4px 0;line-height:1.65}.guide-time-chart time{font-variant-numeric:tabular-nums}
 .r-compare-field h3{font-size:13px;font-weight:500}.r-compare-values>div{font-size:14px;line-height:1.85}
-.page-message{font-size:14px;line-height:1.8}.r-main[data-enter=true],dialog[open]{animation:r-enter 180ms var(--ease)}
+.page-message{font-size:14px;line-height:1.8}.r-main[data-enter=true]{animation:r-enter 140ms var(--ease)}dialog[open]{animation:r-enter 160ms var(--ease)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 html[data-page-background=image] .r-main{background:color-mix(in srgb,var(--paper) 94%,transparent)}
 .r-personal-list .card{background:transparent;border:0;border-radius:0;box-shadow:none;padding:14px 0;margin:0}.r-personal-list .info-list{margin:8px 0}.r-personal-list .info-list>div{padding:12px 0;border-bottom:1px solid var(--line)}.r-personal-list .info-list dd{line-height:1.65;overflow-wrap:anywhere}
@@ -163,3 +163,9 @@ dialog #toast{z-index:20;pointer-events:none}dialog.catalog-panel #toast{bottom:
 .r-calendar-toolbar{position:sticky;top:0;z-index:4;background:var(--paper);display:flex;align-items:center;justify-content:space-between;min-height:44px;margin:0 0 12px}.r-calendar-toolbar>span{font-size:12px}.r-calendar-trigger{width:44px;height:44px;padding:11px}.r-calendar-trigger svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7}
 .r-calendar-panel{position:fixed;z-index:15;right:16px;width:96px;max-height:70dvh;border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:0 8px 24px #10213a26;display:flex;flex-direction:column;overflow:hidden}.r-calendar-panel[hidden]{display:none}.r-calendar-panel header{display:flex;align-items:center;justify-content:flex-end;padding:0 4px;border-bottom:1px solid var(--line);flex:none}.r-calendar-panel header strong{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.r-calendar-panel header button{min-width:44px;min-height:44px;font-size:20px}.r-calendar-scroll{overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding:6px 8px 12px;min-height:0}.r-calendar-scroll h3{position:sticky;top:-6px;background:var(--paper);font-size:13px;line-height:24px;padding:10px 4px 4px;margin:0;color:var(--muted)}.r-calendar-scroll button{display:block;width:100%;min-height:44px;text-align:left;padding:10px 8px;font-size:14px}.r-calendar-scroll button[aria-current=true]{background:var(--action-selected);font-weight:590}.r-memory-entry:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 @media(max-width:350px){.r-calendar-panel{right:12px;width:88px}}
+
+/* Pending feedback paints independently of the committed timer value. */
+[data-action][aria-busy=true]{box-shadow:inset 0 0 0 2px var(--green);background:var(--action-selected)}
+.r-timer{position:relative}.timer-save-status{position:absolute;right:12px;bottom:8px;min-height:18px;font-size:12px;color:var(--muted)}
+.r-nav button[data-nav-pending=true]{color:var(--green);background:var(--action-fill)}
+[data-window-hidden=true] *,[data-window-hidden=true] *::before,[data-window-hidden=true] *::after{animation:none!important;transition:none!important}

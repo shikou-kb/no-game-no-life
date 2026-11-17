@@ -1,6 +1,6 @@
-import {orderedGroups,orderedLabels,shadeColor} from './catalog-order-e14b41d62339.mjs';
-import {dateKey,addDays,dayStart,isDate} from './calendar-e14b41d62339.mjs';
-import {effectiveActivity,emptyPolicy} from './activity-policy-e14b41d62339.mjs';
+import {orderedGroups,orderedLabels,shadeColor} from './catalog-order-27ca4e179461.mjs';
+import {dateKey,addDays,dayStart,isDate} from './calendar-27ca4e179461.mjs';
+import {effectiveActivity,emptyPolicy} from './activity-policy-27ca4e179461.mjs';
 const copy=x=>structuredClone(x),id=()=>globalThis.crypto?.randomUUID?.()??'r4-'+Date.now()+'-'+Math.random().toString(36).slice(2);
 const assert=(v,m)=>{if(!v)throw Error(m);};
 export const DEFAULT_GROUPS=[['life','生活','#187C72'],['rest','休息','#7757AB'],['invest','投入','#285FC8'],['phase','阶段','#936100'],['other','其他','#596C80']];

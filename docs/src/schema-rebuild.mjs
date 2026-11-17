@@ -1,6 +1,6 @@
-import {sha256} from './integrity-e14b41d62339.mjs';
-import {isDate} from './calendar-e14b41d62339.mjs';
-import {ITERATION_FIELDS} from './rebuild-model-e14b41d62339.mjs';
+import {sha256} from './integrity-27ca4e179461.mjs';
+import {isDate} from './calendar-27ca4e179461.mjs';
+import {ITERATION_FIELDS} from './rebuild-model-27ca4e179461.mjs';
 const ok=(v,m)=>{if(!v)throw Error(m);},str=(v,n=200)=>typeof v==='string'&&v.length<=n,time=v=>Number.isSafeInteger(v)&&v>=0;
 export function validateAttachments(files=[]){ok(Array.isArray(files)&&files.length<=20,'每篇最多20个文件');const ids=new Set();for(const f of files){ok(f&&str(f.id)&&f.id&&!ids.has(f.id)&&str(f.name,200)&&f.name&&str(f.type,100)&&time(f.size)&&f.size<=10000000&&typeof f.data==='string'&&/^data:application\/octet-stream;base64,[A-Za-z0-9+/]*={0,2}$/.test(f.data)&&f.data.length<=13333400,'附件无效或超过10MB');const base64=f.data.split(',')[1],size=base64.length*3/4-(base64.endsWith('==')?2:base64.endsWith('=')?1:0);ok(size===f.size&&base64.length%4===0,'附件字节不完整');if(f.sha256){const raw=Uint8Array.from(atob(base64),c=>c.charCodeAt(0));ok(sha256(raw)===f.sha256,'附件校验不一致');}ids.add(f.id);}return files;}
 export function validateRebuild(s){

@@ -1,5 +1,5 @@
-import {COMPOSITIONS} from './onboarding-e14b41d62339.mjs';
-import {effectiveActivity} from './activity-policy-e14b41d62339.mjs';
+import {COMPOSITIONS} from './onboarding-27ca4e179461.mjs';
+import {effectiveActivity} from './activity-policy-27ca4e179461.mjs';
 export const directionChoice=name=>'new-direction:'+COMPOSITIONS.indexOf(name);
 export function directionLinks(state,name){
  const ids=new Set(state.skills.filter(k=>k.composition===name).map(k=>k.id));

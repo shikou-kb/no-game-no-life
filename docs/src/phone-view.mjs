@@ -1,5 +1,5 @@
-import * as D from './domain-e14b41d62339.mjs';
-import {phoneSummary} from './phone-domain-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
+import {phoneSummary} from './phone-domain-27ca4e179461.mjs';
 const icons=new Map();
 function appIcon(pkg){if(icons.has(pkg))return icons.get(pkg);let result='';try{const value=globalThis.NGNLNative?.appIcon?.(pkg);if(typeof value==='string'&&value.length<50000&&/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(value))result=value;}catch{}if(icons.size<300)icons.set(pkg,result);return result;}
 export function renderPhoneCard(state,{e,duration,clock,date=D.dateKey(Date.now(),state.timeZone)},compact,st){

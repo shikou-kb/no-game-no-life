@@ -1,4 +1,4 @@
-import * as D from './domain-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
 export function createPlanEditor({getState,tasks,entityReplace,e}){
  return async function edit(id=null,{onReturn=null,setup=false}={}){
   const state=getState(),original=state.plans.find(p=>p.id===id),today=D.dateKey(Date.now(),state.timeZone),p=original??{id:D.uid(),title:'',startDate:today,endDate:D.addDays(today,6),targetMinutes:0,outcome:'',activityIds:[],skillIds:[],groupIds:[],focus:false,completedAt:null};

@@ -23,6 +23,15 @@
 :root .r-record .r-timer-actions .primary{background:var(--record-action);color:var(--record-on-action);border-color:var(--record-action)}
 .r-record .r-timer-actions .primary:hover{background:var(--action-selected)}
 .r-record .r-timer-actions .secondary{background:var(--paper);color:var(--record-ink);border-color:var(--line)}
+.r-adjust-running{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:-6px}
+.r-adjust-running .text-button,.r-just-ended>.text-button{font-size:13px;min-height:44px}
+.r-record .timer-save-status{position:static;grid-column:1/-1;justify-self:end;min-height:0}.timer-save-status:empty{display:none}
+.r-just-ended{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0 4px;border-top:1px solid var(--line)}
+.r-just-ended>div{min-width:0}.r-just-ended small,.r-just-ended strong,.r-just-ended time{display:block;overflow-wrap:anywhere}
+.r-just-ended strong{font-size:14px;font-weight:550;margin:3px 0}.r-just-ended small,.r-just-ended time{font-size:12px;color:var(--muted);line-height:1.6}
+.r-just-ended>.text-button{flex:none}.end-time-basis{margin-bottom:16px}.end-time-basis strong{font-size:16px}.end-time-basis p{font-size:13px;line-height:1.7;color:var(--muted);margin:5px 0}
+.end-time-review{font-size:13px;line-height:1.7;padding:10px;background:var(--action-fill);border-radius:8px}
+@media(max-width:350px){.r-just-ended{flex-wrap:wrap}.r-just-ended>div{flex-basis:100%}.r-just-ended>.text-button{margin-left:auto}}
 .r-record .r-quick-section{margin:0;padding:7px 0 13px;border-bottom:1px solid var(--line)}
 .r-record .r-quick-heading h2{font-size:15px;font-weight:590;line-height:1.45;margin:0 0 6px}
 .r-quick-viewport{position:relative;min-width:0;margin-inline:calc(-1 * var(--page-edge))}

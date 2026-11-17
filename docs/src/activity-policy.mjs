@@ -1,4 +1,4 @@
-import {CATEGORIES} from './catalog-e14b41d62339.mjs';
+import {CATEGORIES} from './catalog-27ca4e179461.mjs';
 const ids=['life','study','work','exercise','social','play','chores','commute'];
 const uid=()=>globalThis.crypto?.randomUUID?.()??'policy-'+Date.now()+'-'+Math.random().toString(36).slice(2);
 export const groupIdForCategory=name=>{const i=CATEGORIES.indexOf(name);return i<0?'custom:'+name:'group-'+ids[i];};

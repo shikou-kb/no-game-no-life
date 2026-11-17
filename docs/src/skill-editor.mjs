@@ -1,5 +1,5 @@
-import * as D from './domain-e14b41d62339.mjs';
-import {compositionField} from './onboarding-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
+import {compositionField} from './onboarding-27ca4e179461.mjs';
 export function createSkillEditor({tasks,e}){
  return async function edit({onReturn=null}={}){
   await tasks.open({id:'skill:new',kind:'setup',title:'新建一个培养方向',initial:{kind:'skill',name:'',templateId:'',baselinePoints:'0',baselineStages:'0'},extra:{entityId:D.uid()},onReturn,

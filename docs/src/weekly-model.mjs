@@ -1,4 +1,4 @@
-import * as D from './domain-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
 export function weekStart(date){const day=new Date(date+'T12:00:00Z').getUTCDay();return D.addDays(date,-((day+6)%7));}
 const parts=(at,zone)=>Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(at).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
 export function wallClockCandidates(date,clock,zone){

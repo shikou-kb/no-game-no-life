@@ -1,4 +1,4 @@
-import * as D from './domain-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
 export function timelineEntries(state,date,{memory=false,now=Date.now()}={}){
  const start=D.dayStart(date,state.timeZone),end=D.dayStart(D.addDays(date,1),state.timeZone),items=[];
  const rows=D.confirmedSessions(state).filter(r=>r.start<end&&r.end>start).map(row=>({type:'activity',start:Math.max(row.start,start),end:Math.min(row.end,end),row})).sort((a,b)=>a.start-b.start);

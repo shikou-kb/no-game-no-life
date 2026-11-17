@@ -1,5 +1,5 @@
-import {dateKey,isDate} from './calendar-e14b41d62339.mjs';
-import {statisticsRange} from './rebuild-model-e14b41d62339.mjs';
+import {dateKey,isDate} from './calendar-27ca4e179461.mjs';
+import {statisticsRange} from './rebuild-model-27ca4e179461.mjs';
 // Browsing state only: these snapshots never enter the repository or backups.
 export const PRIMARY_PAGES=['today','growth','plans','memory','iteration','settings'];
 export const PAGE_TITLES={today:'记录',growth:'成长',plans:'阶段',memory:'闪回',insights:'统计',settings:'个人',iteration:'迭代',overview:'时间概览',phaseDetail:'阶段框架',taskDetail:'任务',phone:'手机使用',stageOverview:'阶段总览',skillDetail:'培养明细'};

@@ -1,11 +1,12 @@
-import {uid} from './domain-e14b41d62339.mjs';
+import {uid} from './domain-27ca4e179461.mjs';
 export function formValues(form){const data={};for(const el of form.elements){if(!el.name||el.type==='file'||el.hasAttribute('data-task-navigation'))continue;if(el.type==='checkbox'){data[el.name]??=[];if(el.checked)data[el.name].push(el.value);}else if(el.type==='radio'){if(el.checked)data[el.name]=el.value;}else data[el.name]=el.value;}return data;}
 function restore(form,values){for(const el of form.elements){if(!el.name||!(el.name in values)||el.type==='file'||el.hasAttribute('data-task-navigation'))continue;const v=values[el.name];if(el.type==='checkbox')el.checked=Array.isArray(v)?v.includes(el.value):!!v;else if(el.type==='radio')el.checked=v===el.value;else el.value=v??'';}}
 export function createTaskEditor({getRepo,save,openModal,closeModal,showError}){
  let active=null;
- async function open({id,kind,title,initial={},original=null,body,bind,submit='保存',onSave,onSaved=null,onReturn=null,photos=[],assetRefs=[],extra={}}){
+ async function open({id,kind,title,initial={},original=null,body,bind,submit='保存',onSave,onSaved=null,onReturn=null,photos=[],assetRefs=[],extra={},normalizeOriginal=null}){
   if(active){await active.flush();active=null;}
   const prior=(await getRepo().listDrafts()).find(d=>d.id===id),payload=prior?.payload??{values:initial,initialValues:initial,original,operationId:uid(),...extra};
+  if(normalizeOriginal&&payload.original)payload.original=normalizeOriginal(payload.original);
   let form,dirty=false,queue=Promise.resolve(),timer=null;
   let conflict=!!prior&&((original&&JSON.stringify(original)!==JSON.stringify(payload.original))||('focusId' in extra&&payload.focusId!==extra.focusId));
   const draft={id,kind,photos:prior?.photos??photos,assetRefs:prior?.assetRefs??assetRefs,payload,onReturn,

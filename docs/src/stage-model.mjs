@@ -1,5 +1,5 @@
-import {dayStart,addDays} from './calendar-e14b41d62339.mjs';
-import {groupIdForCategory} from './activity-policy-e14b41d62339.mjs';
+import {dayStart,addDays} from './calendar-27ca4e179461.mjs';
+import {groupIdForCategory} from './activity-policy-27ca4e179461.mjs';
 const copy=x=>structuredClone(x),ok=(v,m)=>{if(!v)throw Error(m);};
 export const matchesSource=(source,row)=>(source.activityIds??[]).includes(row.activityId)||(source.skillIds??[]).includes(row.mainSkillId)||(source.groupIds??[]).includes(row.groupId??groupIdForCategory(row.category))||(source.groupIds??[]).includes(row.legacyGroupId);
 export function unionSlices(rows){const result=[];for(const row of [...rows].sort((a,b)=>a.start-b.start||a.end-b.end)){const prior=result.at(-1);if(prior&&prior.id===row.id&&row.start<=prior.end)prior.end=Math.max(prior.end,row.end);else result.push({...row});}return result;}

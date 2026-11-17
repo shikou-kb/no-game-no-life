@@ -1,9 +1,9 @@
-import {categoryImpact,impactKey,removeCategory} from './catalog-removal-e14b41d62339.mjs';
-import {captureModalPosition,restoreModalPosition} from './modal-position-e14b41d62339.mjs';
-import * as D from './domain-e14b41d62339.mjs';
-import {orderedGroups,orderedLabels,positionItem,shadeColor} from './catalog-order-e14b41d62339.mjs';
-import {e} from './views-e14b41d62339.mjs';
-import {button} from './rebuild-views-e14b41d62339.mjs';
+import {categoryImpact,impactKey,removeCategory} from './catalog-removal-27ca4e179461.mjs';
+import {captureModalPosition,restoreModalPosition} from './modal-position-27ca4e179461.mjs';
+import * as D from './domain-27ca4e179461.mjs';
+import {orderedGroups,orderedLabels,positionItem,shadeColor} from './catalog-order-27ca4e179461.mjs';
+import {e} from './views-27ca4e179461.mjs';
+import {button} from './rebuild-views-27ca4e179461.mjs';
 
 export function createCatalogManagement({getState,getRepo,tasks,openModal,closeModal,save,toast,catalog}){
  let context={groupId:null,onReturn:null},positions=new Map();

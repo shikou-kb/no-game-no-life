@@ -1,0 +1,22 @@
+import {sha256} from './integrity-27ca4e179461.mjs';
+import {isDate} from './calendar-27ca4e179461.mjs';
+import {ITERATION_FIELDS} from './rebuild-model-27ca4e179461.mjs';
+const ok=(v,m)=>{if(!v)throw Error(m);},str=(v,n=200)=>typeof v==='string'&&v.length<=n,time=v=>Number.isSafeInteger(v)&&v>=0;
+export function validateAttachments(files=[]){ok(Array.isArray(files)&&files.length<=20,'每篇最多20个文件');const ids=new Set();for(const f of files){ok(f&&str(f.id)&&f.id&&!ids.has(f.id)&&str(f.name,200)&&f.name&&str(f.type,100)&&time(f.size)&&f.size<=10000000&&typeof f.data==='string'&&/^data:application\/octet-stream;base64,[A-Za-z0-9+/]*={0,2}$/.test(f.data)&&f.data.length<=13333400,'附件无效或超过10MB');const base64=f.data.split(',')[1],size=base64.length*3/4-(base64.endsWith('==')?2:base64.endsWith('=')?1:0);ok(size===f.size&&base64.length%4===0,'附件字节不完整');if(f.sha256){const raw=Uint8Array.from(atob(base64),c=>c.charCodeAt(0));ok(sha256(raw)===f.sha256,'附件校验不一致');}ids.add(f.id);}return files;}
+export function validateRebuild(s){
+ if(s.rebuild?.labelStarts!==undefined)ok(s.rebuild.labelStarts&&typeof s.rebuild.labelStarts==='object'&&!Array.isArray(s.rebuild.labelStarts)&&Object.keys(s.rebuild.labelStarts).length<=100000&&Object.entries(s.rebuild.labelStarts).every(([id,n])=>s.activities.some(a=>a.id===id)&&Number.isSafeInteger(n)&&n>=0),'标签开始次数无效');
+ for(const key of ['phases','habits','habitChecks','iterationNodes','iterationEntries']){ok(Array.isArray(s[key])&&s[key].length<=100000,'列表无效：'+key);const ids=new Set();for(const v of s[key]){ok(str(v.id)&&v.id&&!ids.has(v.id),'标识重复：'+key);ids.add(v.id);}}
+ const phases=new Set(s.phases.map(p=>p.id)),habits=new Set(s.habits.map(h=>h.id)),skills=new Set(s.skills.map(k=>k.id));
+ for(const p of s.phases)ok(str(p.title,100)&&p.title.trim()&&isDate(p.startDate)&&isDate(p.endDate)&&p.startDate<=p.endDate&&Array.isArray(p.skillIds)&&p.skillIds.every(id=>skills.has(id))&&str(p.note,20000)&&typeof p.archived==='boolean','阶段框架无效');
+ for(const p of s.phases)if(p.activeVersions!==undefined){ok(Array.isArray(p.activeVersions)&&p.activeVersions.length>0&&p.activeVersions.length<=10000,'阶段生效历史无效');let prev=-1;for(const v of p.activeVersions){ok(v&&time(v.at)&&v.at>prev&&typeof v.active==='boolean','阶段生效历史无效');prev=v.at;}}
+ for(const p of s.plans){ok(!p.phaseId||phases.has(p.phaseId),'任务阶段失联');if(p.sourceVersions){let prev=-1;ok(Array.isArray(p.sourceVersions)&&p.sourceVersions.length<=10000,'关系历史过多');for(const v of p.sourceVersions){ok(time(v.at)&&v.at>prev&&Array.isArray(v.activityIds)&&v.activityIds.every(id=>s.activities.some(a=>a.id===id))&&Array.isArray(v.skillIds)&&v.skillIds.every(id=>skills.has(id))&&Array.isArray(v.groupIds)&&v.groupIds.every(id=>s.activityGroups.some(g=>g.id===id))&&typeof v.active==='boolean','关系历史无效');prev=v.at;}}}
+ for(const h of s.habits)ok((!h.phaseId||phases.has(h.phaseId))&&str(h.title,100)&&h.title.trim()&&typeof h.archived==='boolean','每日习惯无效');
+ const checkKeys=new Set();for(const c of s.habitChecks){const k=c.habitId+':'+c.date;ok(habits.has(c.habitId)&&isDate(c.date)&&time(c.at)&&!checkKeys.has(k),'打卡日期重复或无效');checkKeys.add(k);}
+ const nodes=new Map(s.iterationNodes.map(n=>[n.id,n]));
+ for(const n of nodes.values()){ok(['time','event'].includes(n.branch)&&['category','project'].includes(n.kind)&&str(n.title,100)&&n.title.trim()&&typeof n.archived==='boolean','迭代项目无效');const seen=new Set([n.id]);let p=n.parentId;while(p){const node=nodes.get(p);ok(node&&node.branch===n.branch&&!seen.has(p)&&seen.size<12,'迭代层级循环、失联或过深');seen.add(p);p=node.parentId;}}
+ const sequences=new Set();for(const v of s.iterationEntries){const key=v.nodeId+':'+v.sequence;ok(nodes.has(v.nodeId)&&time(v.at)&&Number.isSafeInteger(v.sequence)&&v.sequence>0&&!sequences.has(key)&&typeof v.reference==='boolean'&&str(v.method,10000)&&ITERATION_FIELDS.every(([k])=>str(v[k],10000)),'迭代记录无效');sequences.add(key);}
+ ok(s.rebuild?.version===1&&Number.isInteger(s.rebuild.guideStep)&&s.rebuild.guideStep>=0&&s.rebuild.guideStep<=5&&typeof s.rebuild.guideDone==='boolean'&&typeof s.rebuild.includeDiaryTime==='boolean','新版设置无效');
+ for(const r of [...s.sessions,...(s.running?[s.running]:[])])ok(r.temporaryName===undefined||str(r.temporaryName,100),'临时名称过长');
+ for(const m of s.moments){validateAttachments(m.attachments);ok(m.entryKind===undefined||['daily','note'].includes(m.entryKind),'闪回类型无效');if(m.timeSummary)ok(isDate(m.timeSummary.date)&&str(m.timeSummary.timeZone,100)&&Array.isArray(m.timeSummary.rows),'闪回时间摘要无效');}
+ return s;
+}

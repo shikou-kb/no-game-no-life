@@ -1,5 +1,5 @@
-import * as D from './domain-e14b41d62339.mjs';
-import {occurrence,weekStart} from './weekly-model-e14b41d62339.mjs';
+import * as D from './domain-27ca4e179461.mjs';
+import {occurrence,weekStart} from './weekly-model-27ca4e179461.mjs';
 export function reminderSuggestions(state,now=Date.now()){
  if(!state.running)return [];const week=weekStart(D.dateKey(now,state.timeZone));
  return state.weeklyRules.flatMap(rule=>[week,D.addDays(week,-7)].map(w=>({...occurrence(state,rule,w),title:rule.title}))).filter(o=>o.state==='scheduled'&&o.activityId===state.running.activityId&&o.start<=now&&o.end>now);

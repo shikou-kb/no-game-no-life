@@ -8,7 +8,7 @@ export function bindQuickStrip(root,{onIdle=()=>{}}={}){
  listen('pointerdown',event=>{if(!event.isPrimary||event.button!==0)return;suppressUntil=0;gesture={id:event.pointerId,x:event.clientX,y:event.clientY,left:strip.scrollLeft,moved:false};},{passive:true});
  const moved=event=>gesture&&(gesture.moved||Math.hypot(event.clientX-gesture.x,event.clientY-gesture.y)>8||Math.abs(strip.scrollLeft-gesture.left)>1);
  listen('pointermove',event=>{if(gesture?.id===event.pointerId&&moved(event))gesture.moved=true;},{passive:true});
- listen('pointerup',event=>{if(gesture?.id!==event.pointerId)return;if(moved(event))suppressUntil=performance.now()+700;gesture=null;busyUntil=performance.now()+700;idle();},{passive:true});
+ listen('pointerup',event=>{if(gesture?.id!==event.pointerId)return;const dragged=moved(event);if(dragged)suppressUntil=performance.now()+700;gesture=null;busyUntil=dragged?performance.now()+700:0;idle();},{passive:true});
  listen('pointercancel',event=>{if(gesture?.id!==event.pointerId)return;suppressUntil=performance.now()+700;gesture=null;busyUntil=performance.now()+700;idle();},{passive:true});
  listen('scroll',()=>{busyUntil=Math.max(busyUntil,performance.now()+180);idle();if(gesture&&Math.abs(strip.scrollLeft-gesture.left)>1)gesture.moved=true;update();},{passive:true});
  listen('click',event=>{if(event.detail>0&&(gesture?.moved||performance.now()<suppressUntil)){event.preventDefault();event.stopImmediatePropagation();}},{capture:true});
